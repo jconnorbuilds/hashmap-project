@@ -1,6 +1,6 @@
 import Node from './Node.mjs';
 
-export class LinkedList {
+export default class LinkedList {
   constructor() {
     this._head = null;
     this._tail = null;

@@ -29,12 +29,7 @@ export default class HashMap {
       bucket.at(bucket.findKey(key)).value = { [key]: value };
     } else {
       if (this.length() + 1 > this.capacity * this.loadFactor) {
-        this.buckets = this.buckets.concat(
-          Array(this.capacity)
-            .fill()
-            .map(() => new LinkedList()),
-        );
-        this.capacity *= 2;
+        this._growBuckets();
       }
       bucket.append({ [key]: value });
     }
@@ -110,5 +105,14 @@ export default class HashMap {
   _getBucket(key) {
     const keyHash = this.hash(key);
     return this.buckets[keyHash];
+  }
+
+  _growBuckets() {
+    this.buckets = this.buckets.concat(
+      Array(this.capacity)
+        .fill()
+        .map(() => new LinkedList()),
+    );
+    this.capacity *= 2;
   }
 }
