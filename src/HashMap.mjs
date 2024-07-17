@@ -23,8 +23,7 @@ export default class HashMap {
   }
 
   set(key, value) {
-    const keyHash = this.hash(key);
-    const bucket = this.buckets[keyHash];
+    const bucket = this._getBucket(key);
 
     if (bucket.containsKey(key)) {
       bucket.at(bucket.findKey(key)).value = { [key]: value };
@@ -42,20 +41,17 @@ export default class HashMap {
   }
 
   get(key) {
-    const keyHash = this.hash(key);
-    const bucket = this.buckets[keyHash];
+    const bucket = this._getBucket(key);
     return bucket.at(bucket.findKey(key));
   }
 
   has(key) {
-    const keyHash = this.hash(key);
-    const bucket = this.buckets[keyHash];
+    const bucket = this._getBucket(key);
     return bucket.containsKey(key);
   }
 
   remove(key) {
-    const keyHash = this.hash(key);
-    const bucket = this.buckets[keyHash];
+    const bucket = this._getBucket(key);
     if (bucket.containsKey(key)) {
       bucket.removeAt(bucket.findKey(key));
       return true;
